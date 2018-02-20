@@ -2,18 +2,17 @@ import unittest
 import uuid
 import random
 import time
-from utils.utils import BaseTest
 from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
-from framework import constructor
+from framework.constructor import constructor
 
 
 class BasicTests(constructor):
     # we can put this on __init__.py
-    def __init__(self, templatespath=''):
+    def __init__(self, *args, **kwargs):
         self.templatespath = './framework/utils/templates'
+        super(BasicTests, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        super(BasicTests, self).setUp()
         self.api = ZeroRobotAPI()
 
     def test001_reboot_vm(self):
@@ -29,12 +28,13 @@ class BasicTests(constructor):
         self.lg('%s STARTED' % self._testID)
 
         # create blueprint
+        import ipdb;ipdb.set_trace()
         text = self.create_cs(url='be-g8-4.demo.greenitglobe.com',
-                              login='john',
                               user='asdasdasd',
                               groups=['level1', 'admin'],
                               repeat=[2, 2],
                               accountname='john',
+                              login='john',
                               csname='johnvdc')
 
         import ipdb;ipdb.set_trace()

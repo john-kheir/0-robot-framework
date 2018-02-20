@@ -1,5 +1,5 @@
 from jinja2 import Environment, FileSystemLoader
-from framework.utils import OVC_BaseTest
+from framework.utils.utils import OVC_BaseTest
 
 
 # this should inherit from zeroos (zos) class too
@@ -10,11 +10,13 @@ class constructor(OVC_BaseTest):
     # put elements that are the same for all objects
     # static_elem = 123
     ## this pass for templatepath should be removed
-    def __init__(self, templatespath='./framework/utils/templates', *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         # object elements
+        templatespath='./framework/utils/templates'
         if templatespath:
             self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
             self.j2_env.globals.update(random_string=self.random_string)
+        super(constructor, self).__init__(*args, **kwargs)
 
     def random_string(self):
         import uuid
