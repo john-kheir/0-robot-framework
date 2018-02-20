@@ -1,0 +1,17 @@
+{% extends 'vdc.yaml'%}
+
+{% block content3 %}
+
+uservdc__{{user or random_string()}}:
+  groups:
+  {% for group in groups%}
+    - {{group}}
+  {% endfor %}
+
+{% endblock %}
+
+{% block content4%}
+
+  asdasda
+
+{% endblock %}

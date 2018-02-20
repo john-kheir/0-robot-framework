@@ -1,0 +1,20 @@
+{% extends 'base.yaml'%}
+
+{% block content2 %}
+{% for r in repeat%}
+
+vdc__{{csname}}:
+    var1: '{{url}}'
+    var2: '{{login}}'
+{% endfor %}
+{% endblock %}
+
+
+{% block content3 %}
+{% endblock %}
+
+{% block content4 %}
+{% endblock %}
+
+{% block content5 %}
+{% endblock %}
