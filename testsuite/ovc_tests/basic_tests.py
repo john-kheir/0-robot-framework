@@ -28,7 +28,6 @@ class BasicTests(constructor):
         self.lg('%s STARTED' % self._testID)
 
         # create blueprint
-        import ipdb;ipdb.set_trace()
         text = self.create_cs(url='be-g8-4.demo.greenitglobe.com',
                               user='asdasdasd',
                               groups=['level1', 'admin'],
@@ -38,7 +37,6 @@ class BasicTests(constructor):
                               csname='johnvdc')
 
         import ipdb;ipdb.set_trace()
-        print(self.vdcname)
         # execute blueprint
         self.execute_bp()
 

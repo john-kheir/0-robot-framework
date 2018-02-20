@@ -31,8 +31,7 @@ class OVC_BaseTest(unittest.TestCase):
         pass
 
     def create_cs(self, *args, **kwargs):
-        self.__init__(*args, **kwargs)
-        self.create_blueprint('test.yaml')
+        self.create_blueprint('test.yaml', **kwargs)
 
     def create_vm(self, vmname):
         pass
