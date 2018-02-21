@@ -33,7 +33,7 @@ class BasicTests(constructor):
                                    groups=['level1', 'admin'],
                                    repeat=[2, 2],
                                    accountname='johnnew',
-                                   templates=['account', 'vdcuser', 'vdc'],
+                                   temp_actions={'account': ['install'], 'vdcuser': ['install'], 'vdc':['install']},
                                    version='0.01')
 
         import ipdb;ipdb.set_trace()
