@@ -32,9 +32,8 @@ class BasicTests(constructor):
                               user='asdasdasd',
                               groups=['level1', 'admin'],
                               repeat=[2, 2],
-                              accountname='john',
-                              login='john',
-                              csname='johnvdc')
+                              accountname='johnnew',
+                              version='0.01')
 
         import ipdb;ipdb.set_trace()
         # execute blueprint
