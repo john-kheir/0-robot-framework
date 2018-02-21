@@ -1,34 +1,6 @@
-services:
-    - github.com/openvcloud/0-templates/sshkey/{{version}}__key:
-        path: '/root/.ssh/id_rsa'
-    - github.com/openvcloud/0-templates/openvcloud/{{version}}__be-g8-4:
-        address: '{{url}}'
-        login: 'kheirj@itsyouonline'
-        token: 'eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJhenAiOiJmTGt5eEYzUVZXYU8waVRBYXR3bHdYWkdPWW1xIiwiZXhwIjoxNTE4NjgxOTEzLCJpc3MiOiJpdHN5b3VvbmxpbmUiLCJzY29wZSI6WyJ1c2VyOmFkbWluIl0sInVzZXJuYW1lIjoia2hlaXJqIn0.wE-gc8ak8KEYUKFesSFE3SymU2U33zqKcJC230rT0ECwXUZHWe_bdBBS2FuvRvvRu0r9-DqQj6cNLjnRNn2MA4H2cMVOPt6MKmv6ZEcS4LFL-vO0w9NWGbshLSZjJw-O'
-    - github.com/openvcloud/0-templates/vdcuser/{{version}}__kheirj:
-        provider: itsyouonline
-        email: kheirj@greenitglobe.com
-    - github.com/openvcloud/0-templates/vdcuser/{{version}}__azmy:
-        provider: itsyouonline
-        email: muhamada@greenitglobe.com
-    - github.com/openvcloud/0-templates/account/{{version}}__{{accountname}}:
-        users:
-            - name: kheirj
-              accesstype: CXDRAU
+{% include 'account.yaml'%}
     - github.com/openvcloud/0-templates/vdc/{{version}}__azmyvdc:
         location: be-g8-4
         users:
-            - name: azmy
-              accesstype: CXDRAU
             - name: kheirj
               accesstype: CXDRAU
-
-actions:
-    - template: github.com/openvcloud/0-templates/account/{{version}}
-      actions: ['install']
-
-    - template: github.com/openvcloud/0-templates/vdcuser/{{version}}
-      actions: ['install']
-
-    - template: github.com/openvcloud/0-templates/vdc/{{version}}
-      actions: ['install']

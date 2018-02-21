@@ -26,6 +26,6 @@ class constructor(OVC_BaseTest):
         """
         yaml file that is used for blueprint creation
         """
-        text = self.j2_env.get_template(yaml).render(**kwargs)
+        text = self.j2_env.get_template(template=vdc.yaml, actions='action').render(**kwargs)
         print(text)
         return text

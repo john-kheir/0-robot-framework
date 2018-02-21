@@ -1,0 +1,11 @@
+services:
+{% block services %}
+{% include template %}
+{% endblock %}
+
+actions:
+{% block actions %}
+{% for action in actions %}
+  - {{actions}}
+{% endfor %}
+{% endblock %}
