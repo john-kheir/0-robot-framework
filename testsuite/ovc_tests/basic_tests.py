@@ -28,17 +28,17 @@ class BasicTests(constructor):
         self.lg('%s STARTED' % self._testID)
 
         # create blueprint
-        text = self.create_cs(url='be-g8-4.demo.greenitglobe.com',
-                              user='asdasdasd',
-                              groups=['level1', 'admin'],
-                              repeat=[2, 2],
-                              accountname='johnnew',
-                              templates=['account', 'vdcuser', 'vdc'],
-                              version='0.01')
+        blueprint = self.create_cs(url='be-g8-4.demo.greenitglobe.com',
+                                   user='asdasdasd',
+                                   groups=['level1', 'admin'],
+                                   repeat=[2, 2],
+                                   accountname='johnnew',
+                                   templates=['account', 'vdcuser', 'vdc'],
+                                   version='0.01')
 
         import ipdb;ipdb.set_trace()
         # execute blueprint
-        self.execute_bp()
+        self.execute_blueprint(blueprint)
 
         # verify the data
         service = self.api.services.names['azmyvdc']

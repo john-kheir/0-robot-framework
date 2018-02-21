@@ -24,9 +24,6 @@ class OVC_BaseTest(unittest.TestCase):
     def lg(self, msg):
         self._logger.info(msg)
 
-    def execute_bp(self):
-        os.system('zrobot blueprint execute /root/blueprints/bp.yaml')
-
     def create_account(self, accountname):
         pass
 

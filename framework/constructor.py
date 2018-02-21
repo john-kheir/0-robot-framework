@@ -1,3 +1,4 @@
+import os
 from jinja2 import Environment, FileSystemLoader
 from framework.utils.utils import OVC_BaseTest
 
@@ -21,6 +22,11 @@ class constructor(OVC_BaseTest):
     def random_string(self):
         import uuid
         return str(uuid.uuid4())[0:8]
+
+    # this is hardcoded .. need to be changed later
+    def execute_blueprint(self, bp_yaml):
+        os.system('echo %s >> /root/blueprints/bp.yaml')
+        os.system('zrobot blueprint execute /root/blueprints/bp.yaml')
 
     def create_blueprint(self, yaml, **kwargs):
         """

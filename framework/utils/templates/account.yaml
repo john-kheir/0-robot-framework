@@ -4,5 +4,5 @@
 
   - github.com/openvcloud/0-templates/account/{{version}}__{{accountname}}:
       users:
-          - name: kheirj
-            accesstype: CXDRAU
+        - name: kheirj
+          accesstype: CXDRAU
