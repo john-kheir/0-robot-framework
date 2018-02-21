@@ -24,11 +24,13 @@ class OVC_BaseTest(unittest.TestCase):
     def lg(self, msg):
         self._logger.info(msg)
 
-    def create_account(self, accountname):
-        pass
+    def create_account(self, *args, **kwargs):
+        blueprint = self.create_blueprint('account.yaml', **kwargs)
+        self.execute_blueprint(blueprint)
 
     def create_cs(self, *args, **kwargs):
-        return self.create_blueprint('vdc.yaml', **kwargs)
+        blueprint = self.create_blueprint('vdc.yaml', **kwargs)
+        self.execute_blueprint(blueprint)
 
-    def create_vm(self, vmname):
+    def create_vm(self, *args, **kwargsame):
         pass
