@@ -28,13 +28,8 @@ class BasicTests(constructor):
         self.lg('%s STARTED' % self._testID)
 
         # create blueprint
-        blueprint = self.create_account(url='be-g8-4.demo.greenitglobe.com',
-                                   user='asdasdasd',
-                                   groups=['level1', 'admin'],
-                                   repeat=[2, 2],
-                                   accountname='johnnew',
-                                   temp_actions={'account': ['install'], 'vdcuser': ['install']},
-                                   version='0.0.1')
+        blueprint = self.create_account(accountname='johnnew',
+                                        temp_actions={'account': ['install'], 'vdcuser': ['install']},)
 
         import ipdb;ipdb.set_trace()
 
