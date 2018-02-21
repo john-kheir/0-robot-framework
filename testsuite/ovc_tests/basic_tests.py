@@ -31,8 +31,6 @@ class BasicTests(constructor):
         blueprint = self.create_account(accountname='johnnew',
                                         temp_actions={'account': ['install'], 'vdcuser': ['install']},)
 
-        import ipdb;ipdb.set_trace()
-
         # verify the data
         service = self.api.services.names['johnnew']
         state = {}
