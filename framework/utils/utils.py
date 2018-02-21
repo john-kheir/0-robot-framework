@@ -1,13 +1,13 @@
 import logging
 import unittest
-import uuid
 import time
-import signal
-import os
+from testconfig import config
+
 
 class OVC_BaseTest(unittest.TestCase):
 
-    url = 'be-g8-4' # get it from the config
+    env = config['main']['environment']
+    location = config['main']['location']
 
     def __init__(self, *args, **kwargs):
         # ovc object variables the class need to be aware about.
@@ -24,13 +24,17 @@ class OVC_BaseTest(unittest.TestCase):
     def lg(self, msg):
         self._logger.info(msg)
 
-    def create_account(self, *args, **kwargs):
-        blueprint = self.create_blueprint('account.yaml', **kwargs)
+    def handle_thread(self, yaml, *args, **kwargs):
+        kwargs['env'] = OVC_BaseTest.env
+        kwargs['location'] = OVC_BaseTest.location
+        blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
+
+    def create_account(self, *args, **kwargs):
+        self.handle_thread('account.yaml', *args, **kwargs)
 
     def create_cs(self, *args, **kwargs):
-        blueprint = self.create_blueprint('vdc.yaml', **kwargs)
-        self.execute_blueprint(blueprint)
+        self.handle_thread('account.yaml', *args, **kwargs)
 
-    def create_vm(self, *args, **kwargsame):
-        pass
+    def create_vm(self, *args, **kwargs):
+        self.handle_thread('account.yaml', *args, **kwargs)

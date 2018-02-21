@@ -45,7 +45,7 @@ class BasicTests(constructor):
             time.sleep(3)
             state = service.state.categories
 
-        state = service.state.categories['acitons']['install']
+        state = service.state.categories['actions']['install']
         self.assertEqual(state, 'ok')
 
         self.lg('%s ENDED' % self._testID)
