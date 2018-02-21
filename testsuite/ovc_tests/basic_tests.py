@@ -33,13 +33,13 @@ class BasicTests(constructor):
                                    groups=['level1', 'admin'],
                                    repeat=[2, 2],
                                    accountname='johnnew',
-                                   temp_actions={'account': ['install'], 'vdcuser': ['install'], 'vdc':['install']},
+                                   temp_actions={'account': ['install'], 'vdcuser': ['install']},
                                    version='0.0.1')
 
         import ipdb;ipdb.set_trace()
 
         # verify the data
-        service = self.api.services.names['azmyvdc']
+        service = self.api.services.names['johnnew']
         state = {}
         while state == {}:
             time.sleep(3)
