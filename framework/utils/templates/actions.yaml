@@ -1,0 +1,4 @@
+{% for template in templates %}
+  - template: github.com/openvcloud/0-templates/{{template}}/{{version}}
+    actions: ['install']
+{% endfor %}
