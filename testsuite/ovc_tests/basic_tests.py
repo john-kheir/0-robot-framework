@@ -34,7 +34,7 @@ class BasicTests(constructor):
                                    repeat=[2, 2],
                                    accountname='johnnew',
                                    temp_actions={'account': ['install'], 'vdcuser': ['install'], 'vdc':['install']},
-                                   version='0.01')
+                                   version='0.0.1')
 
         import ipdb;ipdb.set_trace()
         # execute blueprint
@@ -44,6 +44,7 @@ class BasicTests(constructor):
         service = self.api.services.names['azmyvdc']
         state = {}
         while state == {}:
+            time.sleep(3)
             state = service.state.categories
 
         state = service.state.categories['acitons']['install']

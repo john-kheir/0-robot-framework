@@ -25,7 +25,7 @@ class constructor(OVC_BaseTest):
 
     # this is hardcoded .. need to be changed later
     def execute_blueprint(self, bp_yaml):
-        os.system('echo %s >> /root/blueprints/bp.yaml')
+        os.system('echo "%s" >> /root/blueprints/bp.yaml' % bp_yaml)
         os.system('zrobot blueprint execute /root/blueprints/bp.yaml')
 
     def create_blueprint(self, yaml, **kwargs):
