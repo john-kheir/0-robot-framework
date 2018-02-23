@@ -2,6 +2,7 @@ import os
 from jinja2 import Environment, FileSystemLoader
 from framework.utils.utils import OVC_BaseTest
 from testconfig import config
+import uuid
 
 # this should inherit from zeroos (zos) class too
 
@@ -19,7 +20,6 @@ class constructor(OVC_BaseTest):
             self.j2_env.globals.update(random_string=self.random_string)
 
     def random_string(self):
-        import uuid
         return str(uuid.uuid4())[0:8]
 
     # this is hardcoded .. need to be changed later

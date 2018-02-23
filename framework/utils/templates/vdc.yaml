@@ -1,7 +1,22 @@
 {% include 'account.yaml'%}
 
-  - github.com/openvcloud/0-templates/vdc/{{version}}__azmyvdc:
+{% for cs in cloudspaces %}
+{% for csname in cs.keys() %}
+  - github.com/openvcloud/0-templates/vdc/{{version}}__{{csname}}:
       location: be-g8-4
-      users:
-        - name: kheirj
-          accesstype: CXDRAU
+{% for key in cs[csname].keys() %}
+{% if cs[csname][key] is mapping %}
+      {{key}}:
+{% for v in cs[csname][key].keys() %}
+{% if v == 'name' %}
+         - {{v}}: {{cs[csname][key][v]}}
+{% else %}
+           {{v}}: {{cs[csname][key][v]}}
+{% endif %}
+{% endfor %}
+{% else %}
+      {{key}}: {{cs[csname][key]}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endfor %}
