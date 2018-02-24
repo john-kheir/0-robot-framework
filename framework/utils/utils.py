@@ -10,7 +10,6 @@ class OVC_BaseTest(unittest.TestCase):
     location = config['main']['location']
 
     def __init__(self, *args, **kwargs):
-        # ovc object variables the class need to be aware about.
         #for k in kwargs:
         #    setattr(self, k, kwargs[k])
         #self.csname = self.random_string()
@@ -20,6 +19,7 @@ class OVC_BaseTest(unittest.TestCase):
         self._logger = logging.LoggerAdapter(logging.getLogger('openvcloud_testsuite'),
                                              {'testid': self.shortDescription() or self._testID})
         self.templatespath = './framework/utils/templates'
+        self.vdcusers = [{'kheirj': {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
 
     def lg(self, msg):
         self._logger.info(msg)
@@ -27,6 +27,7 @@ class OVC_BaseTest(unittest.TestCase):
     def handle_thread(self, yaml, *args, **kwargs):
         kwargs['env'] = OVC_BaseTest.env
         kwargs['location'] = OVC_BaseTest.location
+        self.vdcusers.extend(kwargs['vdcusers'])
         blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
 

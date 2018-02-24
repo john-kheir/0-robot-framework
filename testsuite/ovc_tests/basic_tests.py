@@ -4,6 +4,7 @@ import random
 import time
 from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
 from framework.constructor import constructor
+from collections import OrderedDict
 
 
 class BasicTests(constructor):
@@ -30,6 +31,16 @@ class BasicTests(constructor):
         # create blueprint
         blueprint = self.create_account(accountname='johnnew',
                                         temp_actions={'account': ['install'], 'vdcuser': ['install']},)
+
+        self.acc1 = self.random_string()
+        self.cs1 = self.random_string()
+        self.cs2 = self.random_string()
+        self.vdcuser = self.random_string()
+        vdcusers = [{self.vdcuser: {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
+        accounts = [{self.acc1: {}}]
+        cloudspaces = [{self.cs1: {}},
+                       {self.cs2: OrderedDict([('name', self.vdcuser), ('accesstype': 'CXDRAU')])}]
+        self.createvdc(accounts=accounts, cloudspaces=cloudspaces)
 
         # verify the data
         service = self.api.services.names['johnnew']
