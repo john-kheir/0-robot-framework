@@ -1,13 +1,10 @@
-import unittest
-import uuid
-import random
 import time
 from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
-from framework.constructor import constructor
+from framework.utils.utils import OVC_BaseTest
 from collections import OrderedDict
 
 
-class BasicTests(constructor):
+class BasicTests(OVC_BaseTest):
     # we can put this on __init__.py
     def __init__(self, *args, **kwargs):
         self.templatespath = './framework/utils/templates'
@@ -29,18 +26,18 @@ class BasicTests(constructor):
         self.lg('%s STARTED' % self._testID)
 
         # create blueprint
-        blueprint = self.create_account(accountname='johnnew',
-                                        temp_actions={'account': ['install'], 'vdcuser': ['install']},)
 
         self.acc1 = self.random_string()
         self.cs1 = self.random_string()
         self.cs2 = self.random_string()
         self.vdcuser = self.random_string()
-        vdcusers = [{self.vdcuser: {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
-        accounts = [{self.acc1: {}}]
-        cloudspaces = [{self.cs1: {}},
-                       {self.cs2: OrderedDict([('name', self.vdcuser), ('accesstype': 'CXDRAU')])}]
-        self.createvdc(accounts=accounts, cloudspaces=cloudspaces)
+        self.vdcusers.extend([{self.vdcuser: {'provider': 'itsyouonline', 'email': 'muhamada@greenitglobe.com'}}])
+        self.accounts = [{self.acc1: {}}]
+        self.cloudspaces = [{self.cs1: {}},
+                       {self.cs2: {'users': OrderedDict([('name', self.vdcuser), ('accesstype', 'CXDRAU')])}}]
+        self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
+        self.create_cs(vdcusers=self.vdcusers, accounts=self.accounts,
+                       cloudspaces=self.cloudspaces, temp_actions=self.temp_actions)
 
         # verify the data
         service = self.api.services.names['johnnew']

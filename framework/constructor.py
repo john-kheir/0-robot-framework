@@ -3,11 +3,14 @@ from jinja2 import Environment, FileSystemLoader
 from framework.utils.utils import OVC_BaseTest
 from testconfig import config
 import uuid
+import logging
+import time
+import unittest
 
 # this should inherit from zeroos (zos) class too
 
 
-class constructor(OVC_BaseTest):
+class constructor(unittest.TestCase):
 
     version = config['main']['version']
 
@@ -18,6 +21,12 @@ class constructor(OVC_BaseTest):
         if templatespath:
             self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
             self.j2_env.globals.update(random_string=self.random_string)
+
+    def Setup(self):
+        self._testID = self._testMethodName
+        self._startTime = time.time()
+        self._logger = logging.LoggerAdapter(logging.getLogger('openvcloud_testsuite'),
+                                             {'testid': self.shortDescription() or self._testID})
 
     def random_string(self):
         return str(uuid.uuid4())[0:8]

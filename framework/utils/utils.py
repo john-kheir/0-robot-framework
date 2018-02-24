@@ -27,7 +27,6 @@ class OVC_BaseTest(unittest.TestCase):
     def handle_thread(self, yaml, *args, **kwargs):
         kwargs['env'] = OVC_BaseTest.env
         kwargs['location'] = OVC_BaseTest.location
-        self.vdcusers.extend(kwargs['vdcusers'])
         blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
 
@@ -35,7 +34,7 @@ class OVC_BaseTest(unittest.TestCase):
         self.handle_thread('account.yaml', *args, **kwargs)
 
     def create_cs(self, *args, **kwargs):
-        self.handle_thread('account.yaml', *args, **kwargs)
+        self.handle_thread('vdc.yaml', *args, **kwargs)
 
     def create_vm(self, *args, **kwargs):
-        self.handle_thread('account.yaml', *args, **kwargs)
+        self.handle_thread('vm.yaml', *args, **kwargs)
