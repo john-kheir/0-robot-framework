@@ -2,9 +2,10 @@ import logging
 import unittest
 import time
 from testconfig import config
+from framework.constructor import constructor
 
 
-class OVC_BaseTest(unittest.TestCase):
+class OVC_BaseTest(constructor):
 
     env = config['main']['environment']
     location = config['main']['location']
