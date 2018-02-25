@@ -1,2 +1,2 @@
-  - github.com/openvcloud/0-templates/sshkey/0.0.1__key:
-       path: '/root/.ssh/id_rsa'
+  - github.com/openvcloud/0-templates/sshkey/{{version}}__{{random_string()}}:
+       path: '{{config_params('key')}}'

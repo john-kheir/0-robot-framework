@@ -1,4 +1,4 @@
   - github.com/openvcloud/0-templates/openvcloud/{{version}}__{{random_string()}}:
-      address: '{{env}}'
-      login: '{{login}}'
-      token: '{{token}}'
+      address: '{{config_params('env')}}'
+      login: '{{config_params('login')}}'
+      token: '{{config_params('token')}}'

@@ -26,21 +26,19 @@ class OVC_BaseTest(constructor):
 
     def ovc_client(self):
         key_path = os.path.expanduser(OVC_BaseTest.key)
-        data = {
-                'address': OVC_BaseTest.env ,
+        data = {'address': OVC_BaseTest.env,
                 'port': 443,
                 'appkey_': self.iyo_jwt()
                 }
         return j.clients.openvcloud.get(instance='main', data=data,
                                         sshkey_path=key_path)
 
-
-
     def handle_blueprint(self, yaml, *args, **kwargs):
-        kwargs['env'] = OVC_BaseTest.env
-        kwargs['location'] = OVC_BaseTest.location
-        kwargs['login'] = OVC_BaseTest.login
-        kwargs['token'] = self.ito_jwt()
+        #kwargs['env'] = OVC_BaseTest.env
+        #kwargs['location'] = OVC_BaseTest.location
+        #kwargs['login'] = OVC_BaseTest.login
+        #kwargs['key'] = OVC_BaseTest.key
+        #kwargs['token'] = self.iyo_jwt()
         blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
 
@@ -53,9 +51,9 @@ class OVC_BaseTest(constructor):
     def create_vm(self, *args, **kwargs):
         self.handle_blueprint('vm.yaml', *args, **kwargs)
 
-    def get_cloudspace(name):
+    def get_cloudspace(self, name):
         cloudspaces = self.ovc_client.api.cloudapi.cloudspaces.list()
         for cs in cloudspaces:
-            if cs['name'] == name
-            return class
+            if cs['name'] == name:
+                return cs
         return False

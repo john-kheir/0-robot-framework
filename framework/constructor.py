@@ -6,6 +6,7 @@ import uuid
 import logging
 import time
 import unittest
+from testconfig import config
 
 
 class constructor(unittest.TestCase):
@@ -21,10 +22,14 @@ class constructor(unittest.TestCase):
         templatespath = './framework/utils/templates'
         self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
         self.j2_env.globals.update(random_string=self.random_string)
+        self.j2_env.globals.update(config_params=self.config_params)
         self.api = ZeroRobotAPI()
 
     def random_string(self):
         return str(uuid.uuid4())[0:8]
+
+    def config_params(self, param):
+        return config['main'][param]
 
     def log(self, msg):
         self._logger.info(msg)
