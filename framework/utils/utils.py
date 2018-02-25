@@ -10,14 +10,15 @@ from js9 import j
 class OVC_BaseTest(constructor):
 
     env = config['main']['environment']
-    location = config['main']['location']
     key = config['main']['key']
-    login = config['main']['login']
 
     def __init__(self, *args, **kwargs):
         super(OVC_BaseTest, self).__init__(*args, **kwargs)
         self.vdcusers = [{'kheirj': {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
         self.ovc_client = self.ovc_client()
+
+    def setUp(self):
+        super(OVC_BaseTest, self).setUp()
 
     def iyo_jwt(self):
         key_path = os.path.expanduser(OVC_BaseTest.key)
@@ -34,11 +35,7 @@ class OVC_BaseTest(constructor):
                                         sshkey_path=key_path)
 
     def handle_blueprint(self, yaml, *args, **kwargs):
-        #kwargs['env'] = OVC_BaseTest.env
-        #kwargs['location'] = OVC_BaseTest.location
-        #kwargs['login'] = OVC_BaseTest.login
-        #kwargs['key'] = OVC_BaseTest.key
-        #kwargs['token'] = self.iyo_jwt()
+        kwargs['token'] = self.iyo_jwt()
         blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
 

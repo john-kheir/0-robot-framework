@@ -9,7 +9,8 @@ class BasicTests(OVC_BaseTest):
     def __init__(self, *args, **kwargs):
         super(BasicTests, self).__init__(*args, **kwargs)
 
-    def Setup(self):
+    def setUp(self):
+        super(BasicTests, self).setUp()
         self.acc1 = self.random_string()
         self.cs1 = self.random_string()
         self.accounts = [{self.acc1: {}}]
