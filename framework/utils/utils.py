@@ -52,3 +52,10 @@ class OVC_BaseTest(constructor):
 
     def create_vm(self, *args, **kwargs):
         self.handle_blueprint('vm.yaml', *args, **kwargs)
+
+    def get_cloudspace(name):
+        cloudspaces = self.ovc_client.api.cloudapi.cloudspaces.list()
+        for cs in cloudspaces:
+            if cs['name'] == name
+            return class
+        return False

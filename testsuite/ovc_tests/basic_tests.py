@@ -9,20 +9,16 @@ class BasicTests(OVC_BaseTest):
     def __init__(self, *args, **kwargs):
         super(BasicTests, self).__init__(*args, **kwargs)
 
-    def setUp(self):
-        self.api = ZeroRobotAPI()
-
     def test001_trial(self):
         """ ZRT-OVC-001
         *Test case for ...*
 
         **Test Scenario:**
 
-        #.
+        #. Create an account and 2 cloudspaces, should succeed.
+        #. check that the cloudspaces have been created.
         """
         self.log('%s STARTED' % self._testID)
-
-        # create blueprint
 
         self.acc1 = self.random_string()
         self.cs1 = self.random_string()
@@ -33,21 +29,21 @@ class BasicTests(OVC_BaseTest):
         self.cloudspaces = [{self.cs1: {}},
                        {self.cs2: {'users': OrderedDict([('name', self.vdcuser), ('accesstype', 'CXDRAU')])}}]
         self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
+
+        self.log('Create 1 account and 2 cloudspaces, should succeed')
         self.create_cs(vdcusers=self.vdcusers, accounts=self.accounts,
                        cloudspaces=self.cloudspaces, temp_actions=self.temp_actions)
 
-        # verify the data
-        service = self.api.services.names[self.cs2]
-        state = {}
-        while state == {}:
-            time.sleep(3)
-            state = service.state.categories
+        # wait till blueprint is executed
+        status = wait_for_service_action_status(self.cs2)
 
-        state = service.state.categories['actions']['install']
-        self.assertEqual(state, 'ok')
-
-        import ipdb;ipdb.set_trace()
-        self.ovc_client
-
+        self.log('check that the cloudspaces have been created')
+        self.assertTrue(self.get_cloudspace(self.cs1))
+        self.assertTrue(self.get_cloudspace(self.cs2))
 
         self.log('%s ENDED' % self._testID)
+
+    def tearDown():
+        self.temp_actions = {'account': ['uninstall']}
+        self.create_account(vdcusers=self.vdcusers, accounts=self.accounts,
+                            temp_actions=self.temp_actions))

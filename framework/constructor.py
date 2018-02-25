@@ -1,5 +1,6 @@
 import os
 from jinja2 import Environment, FileSystemLoader
+from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
 from testconfig import config
 import uuid
 import logging
@@ -20,6 +21,7 @@ class constructor(unittest.TestCase):
         templatespath = './framework/utils/templates'
         self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
         self.j2_env.globals.update(random_string=self.random_string)
+        self.api = ZeroRobotAPI()
 
     def random_string(self):
         return str(uuid.uuid4())[0:8]
@@ -29,8 +31,9 @@ class constructor(unittest.TestCase):
 
     # this is hardcoded .. need to be changed later
     def execute_blueprint(self, bp_yaml):
-        os.system('echo "%s" >> /root/blueprints/bp.yaml' % bp_yaml)
+        os.system('echo "%s" >> /root/bp.yaml' % bp_yaml)
         os.system('zrobot blueprint execute /root/blueprints/bp.yaml')
+        os.system('rm /root/bp.yaml')
 
     def create_blueprint(self, yaml, **kwargs):
         """
@@ -39,5 +42,16 @@ class constructor(unittest.TestCase):
         kwargs['version'] = constructor.version
         blueprint = self.j2_env.get_template('base.yaml').render(services=yaml,
                                                                  actions='actions.yaml',
-                                                         	 **kwargs)
+                                                                 **kwargs)
         return blueprint
+
+    def wait_for_service_action_status(self, servicename, action='install',
+                                       status='ok', timeout=200):
+        service = self.api.services.names[servicename]
+        for i in range(timeout):
+            time.sleep(1)
+            state = service.state.categories
+            if state:
+                self.assertEqual(service.state.categories['actions'][action], status)
+        self.assertTrue(state, "No state has been found")
+        self.assertTrue(False, state)
