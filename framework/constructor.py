@@ -6,20 +6,16 @@ import logging
 import time
 import unittest
 
-# this should inherit from zeroos (zos) class too
-
 
 class constructor(unittest.TestCase):
 
     version = config['main']['version']
 
-    # this pass for templatepath should be removed
     def __init__(self, *args, **kwargs):
         super(constructor, self).__init__(*args, **kwargs)
-        templatespath='./framework/utils/templates'
-        if templatespath:
-            self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
-            self.j2_env.globals.update(random_string=self.random_string)
+        templatespath = './framework/utils/templates'
+        self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
+        self.j2_env.globals.update(random_string=self.random_string)
 
     def Setup(self):
         self._testID = self._testMethodName
@@ -42,5 +38,5 @@ class constructor(unittest.TestCase):
         kwargs['version'] = constructor.version
         blueprint = self.j2_env.get_template('base.yaml').render(services=yaml,
                                                                  actions='actions.yaml',
-                                                                 **kwargs)
+                                                         	 **kwargs)
         return blueprint

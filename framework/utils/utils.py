@@ -11,31 +11,23 @@ class OVC_BaseTest(constructor):
     location = config['main']['location']
 
     def __init__(self, *args, **kwargs):
-        #for k in kwargs:
-        #    setattr(self, k, kwargs[k])
-        #self.csname = self.random_string()
         super(OVC_BaseTest, self).__init__(*args, **kwargs)
-        self._testID = self._testMethodName
-        self._startTime = time.time()
-        self._logger = logging.LoggerAdapter(logging.getLogger('openvcloud_testsuite'),
-                                             {'testid': self.shortDescription() or self._testID})
-        self.templatespath = './framework/utils/templates'
         self.vdcusers = [{'kheirj': {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
 
     def lg(self, msg):
         self._logger.info(msg)
 
-    def handle_thread(self, yaml, *args, **kwargs):
+    def handle_blueprint(self, yaml, *args, **kwargs):
         kwargs['env'] = OVC_BaseTest.env
         kwargs['location'] = OVC_BaseTest.location
         blueprint = self.create_blueprint(yaml, **kwargs)
         self.execute_blueprint(blueprint)
 
     def create_account(self, *args, **kwargs):
-        self.handle_thread('account.yaml', *args, **kwargs)
+        self.handle_blueprint('account.yaml', *args, **kwargs)
 
     def create_cs(self, *args, **kwargs):
-        self.handle_thread('vdc.yaml', *args, **kwargs)
+        self.handle_blueprint('vdc.yaml', *args, **kwargs)
 
     def create_vm(self, *args, **kwargs):
-        self.handle_thread('vm.yaml', *args, **kwargs)
+        self.handle_blueprint('vm.yaml', *args, **kwargs)
