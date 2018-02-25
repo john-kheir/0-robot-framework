@@ -1,6 +1,5 @@
 import os
 from jinja2 import Environment, FileSystemLoader
-from framework.utils.utils import OVC_BaseTest
 from testconfig import config
 import uuid
 import logging
