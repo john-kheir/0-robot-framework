@@ -13,15 +13,13 @@ class constructor(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
         super(constructor, self).__init__(*args, **kwargs)
-        templatespath = './framework/utils/templates'
-        self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
-        self.j2_env.globals.update(random_string=self.random_string)
-
-    def Setup(self):
         self._testID = self._testMethodName
         self._startTime = time.time()
         self._logger = logging.LoggerAdapter(logging.getLogger('openvcloud_testsuite'),
                                              {'testid': self.shortDescription() or self._testID})
+        templatespath = './framework/utils/templates'
+        self.j2_env = Environment(loader=FileSystemLoader(searchpath=templatespath), trim_blocks=True)
+        self.j2_env.globals.update(random_string=self.random_string)
 
     def random_string(self):
         return str(uuid.uuid4())[0:8]

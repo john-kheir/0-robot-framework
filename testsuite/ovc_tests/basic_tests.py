@@ -7,21 +7,18 @@ from collections import OrderedDict
 class BasicTests(OVC_BaseTest):
     # we can put this on __init__.py
     def __init__(self, *args, **kwargs):
-        self.templatespath = './framework/utils/templates'
         super(BasicTests, self).__init__(*args, **kwargs)
 
     def setUp(self):
         self.api = ZeroRobotAPI()
 
-    def test001_reboot_vm(self):
-        """ OVC-001
-        *Test case for reboot machine with different initial status (Running/Halted).*
+    def test001_trial(self):
+        """ ZRT-OVC-001
+        *Test case for ...*
 
         **Test Scenario:**
 
-        #. create virtual machine vm, should succeed
-        #. set the vm to required status, should succeed
-        #. reboot machine with initial status, should succeed
+        #.
         """
         self.log('%s STARTED' % self._testID)
 

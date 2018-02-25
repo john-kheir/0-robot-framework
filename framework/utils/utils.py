@@ -4,6 +4,7 @@ import time
 import os
 from testconfig import config
 from framework.constructor import constructor
+from js9 import j
 
 
 class OVC_BaseTest(constructor):
@@ -16,14 +17,14 @@ class OVC_BaseTest(constructor):
     def __init__(self, *args, **kwargs):
         super(OVC_BaseTest, self).__init__(*args, **kwargs)
         self.vdcusers = [{'kheirj': {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
-        self.ovc_client = ovc_client()
+        self.ovc_client = self.ovc_client()
 
-    def iyo_jwt():
+    def iyo_jwt(self):
         ito_client = j.clients.itsyouonline.get(instance="main")
         return ito_client.jwt
 
-    def ovc_client():
-        key_path = os.path.expanduser(key)
+    def ovc_client(self):
+        key_path = os.path.expanduser(OVC_BaseTest.key)
         data = {
                 'address': OVC_BaseTest.env ,
                 'port': 443,
