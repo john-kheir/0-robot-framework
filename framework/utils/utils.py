@@ -20,7 +20,8 @@ class OVC_BaseTest(constructor):
         self.ovc_client = self.ovc_client()
 
     def iyo_jwt(self):
-        ito_client = j.clients.itsyouonline.get(instance="main")
+        key_path = os.path.expanduser(OVC_BaseTest.key)
+        ito_client = j.clients.itsyouonline.get(instance="main", sshkey_path=key_path)
         return ito_client.jwt
 
     def ovc_client(self):
