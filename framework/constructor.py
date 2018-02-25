@@ -26,6 +26,9 @@ class constructor(unittest.TestCase):
     def random_string(self):
         return str(uuid.uuid4())[0:8]
 
+    def log(self, msg):
+        self._logger.info(msg)
+
     # this is hardcoded .. need to be changed later
     def execute_blueprint(self, bp_yaml):
         os.system('echo "%s" >> /root/blueprints/bp.yaml' % bp_yaml)

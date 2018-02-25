@@ -23,7 +23,7 @@ class BasicTests(OVC_BaseTest):
         #. set the vm to required status, should succeed
         #. reboot machine with initial status, should succeed
         """
-        self.lg('%s STARTED' % self._testID)
+        self.log('%s STARTED' % self._testID)
 
         # create blueprint
 
@@ -40,7 +40,7 @@ class BasicTests(OVC_BaseTest):
                        cloudspaces=self.cloudspaces, temp_actions=self.temp_actions)
 
         # verify the data
-        service = self.api.services.names['johnnew']
+        service = self.api.services.names[self.cs2]
         state = {}
         while state == {}:
             time.sleep(3)
@@ -49,4 +49,8 @@ class BasicTests(OVC_BaseTest):
         state = service.state.categories['actions']['install']
         self.assertEqual(state, 'ok')
 
-        self.lg('%s ENDED' % self._testID)
+        import ipdb;ipdb.set_trace()
+        self.ovc_client
+
+
+        self.log('%s ENDED' % self._testID)

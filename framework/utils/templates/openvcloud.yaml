@@ -1,4 +1,4 @@
-  - github.com/openvcloud/0-templates/openvcloud/{{version}}__be-g8-4:
+  - github.com/openvcloud/0-templates/openvcloud/{{version}}__{{random_string()}}:
       address: '{{env}}'
-      login: 'kheirj@itsyouonline'
-      token: 'eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJhenAiOiJmTGt5eEYzUVZXYU8waVRBYXR3bHdYWkdPWW1xIiwiZXhwIjoxNTE4NjgxOTEzLCJpc3MiOiJpdHN5b3VvbmxpbmUiLCJzY29wZSI6WyJ1c2VyOmFkbWluIl0sInVzZXJuYW1lIjoia2hlaXJqIn0.wE-gc8ak8KEYUKFesSFE3SymU2U33zqKcJC230rT0ECwXUZHWe_bdBBS2FuvRvvRu0r9-DqQj6cNLjnRNn2MA4H2cMVOPt6MKmv6ZEcS4LFL-vO0w9NWGbshLSZjJw-O'
+      login: '{{login}}'
+      token: '{{token}}'
