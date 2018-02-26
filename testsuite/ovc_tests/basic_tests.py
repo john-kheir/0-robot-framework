@@ -29,7 +29,7 @@ class BasicTests(OVC_BaseTest):
 
         self.cs2 = self.random_string()
         self.vdcuser = self.random_string()
-        self.vdcusers.extend([{self.vdcuser: {'provider': 'itsyouonline', 'email': 'muhamada@greenitglobe.com'}}])
+        self.vdcusers.extend([{self.vdcuser: {'provider': 'itsyouonline', 'email': 'abdelmab@greenitglobe.com'}}])
         self.cloudspaces.extend([{self.cs2: {'users': OrderedDict([('name', self.vdcuser), ('accesstype', 'CXDRAU')])}}])
         self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
 
@@ -47,6 +47,8 @@ class BasicTests(OVC_BaseTest):
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):
+        self.delete_services()
         self.temp_actions = {'account': ['uninstall']}
         self.create_account(vdcusers=self.vdcusers, accounts=self.accounts,
                             temp_actions=self.temp_actions)
+        self.delete_services()
