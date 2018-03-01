@@ -42,7 +42,7 @@ class BasicTests(OVC_BaseTest):
         self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
 
         self.log('Create 1 account and 2 cloudspaces, should succeed')
-        self.create_cs(vdcusers=self.vdcusers, accounts=self.accounts,
+        self.create_cs(openvcloud=self.openvcloud, vdcusers=self.vdcusers, accounts=self.accounts,
                        cloudspaces=self.cloudspaces, temp_actions=self.temp_actions)
 
         # wait till blueprint is executed
@@ -57,6 +57,6 @@ class BasicTests(OVC_BaseTest):
     def tearDown(self):
         self.delete_services()
         self.temp_actions = {'account': ['uninstall']}
-        self.create_account(vdcusers=self.vdcusers, accounts=self.accounts,
-                            temp_actions=self.temp_actions)
+        self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
+                            accounts=self.accounts, temp_actions=self.temp_actions)
         self.delete_services()

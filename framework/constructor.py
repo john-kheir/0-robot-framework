@@ -36,11 +36,8 @@ class constructor(unittest.TestCase):
     def log(self, msg):
         self._logger.info(msg)
 
-    # this is hardcoded .. need to be changed later
     def execute_blueprint(self, blueprint):
-        #os.system('echo "%s" >> /root/bp.yaml' % bp_yaml)
-        #os.system('zrobot blueprint execute /root/bp.yaml')
-        #os.system('rm /root/bp.yaml')
+        os.system('echo "{0}" >> /tmp/{1}_{2}.yaml'.format(blueprint, self._testID, self.random_string()))
         instance, _ = utils.get_instance()
         client = j.clients.zrobot.get(instance)
         content = j.data.serializer.yaml.loads(blueprint)
