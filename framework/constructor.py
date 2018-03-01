@@ -1,11 +1,14 @@
 import os
-from jinja2 import Environment, FileSystemLoader
-from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
 import uuid
 import logging
 import time
 import unittest
+from js9 import j
 from testconfig import config
+from requests.exceptions import HTTPError
+from jinja2 import Environment, FileSystemLoader
+from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
+from zerorobot.cli import utils
 
 
 class constructor(unittest.TestCase):
@@ -34,10 +37,20 @@ class constructor(unittest.TestCase):
         self._logger.info(msg)
 
     # this is hardcoded .. need to be changed later
-    def execute_blueprint(self, bp_yaml):
-        os.system('echo "%s" >> /root/bp.yaml' % bp_yaml)
-        os.system('zrobot blueprint execute /root/bp.yaml')
-        os.system('rm /root/bp.yaml')
+    def execute_blueprint(self, blueprint):
+        #os.system('echo "%s" >> /root/bp.yaml' % bp_yaml)
+        #os.system('zrobot blueprint execute /root/bp.yaml')
+        #os.system('rm /root/bp.yaml')
+        instance, _ = utils.get_instance()
+        client = j.clients.zrobot.get(instance)
+        content = j.data.serializer.yaml.loads(blueprint)
+        data = {'content': content}
+
+        try:
+            tasks, _ = client.api.blueprints.ExecuteBlueprint(data)
+        except HTTPError as err:
+            msg = err.response.json()['message']
+            self.fail("error during execution of the blueprint: %s" % msg)
 
     def delete_services(self):
         for serviceguid in self.api.services.guids.keys():

@@ -14,7 +14,6 @@ class OVC_BaseTest(constructor):
 
     def __init__(self, *args, **kwargs):
         super(OVC_BaseTest, self).__init__(*args, **kwargs)
-        self.vdcusers = [{'kheirj': {'provider': 'itsyouonline', 'email': 'kheirj@greenitglobe.com'}}]
         self.ovc_client = self.ovc_client()
 
     def setUp(self):

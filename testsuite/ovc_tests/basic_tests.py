@@ -11,10 +11,14 @@ class BasicTests(OVC_BaseTest):
 
     def setUp(self):
         super(BasicTests, self).setUp()
+        self.openvcloud = self.random_string()
+        self.vdcusers = [{'kheirj': {'openvcloud': self.openvcloud,
+                                     'provider': 'itsyouonline',
+                                     'email': 'kheirj@greenitglobe.com'}}]
         self.acc1 = self.random_string()
         self.cs1 = self.random_string()
-        self.accounts = [{self.acc1: {}}]
-        self.cloudspaces = [{self.cs1: {}}]
+        self.accounts = [{self.acc1: {'openvcloud': self.openvcloud}}]
+        self.cloudspaces = [{self.cs1: {'account': self.acc1}}]
 
     def test001_trial(self):
         """ ZRT-OVC-001
@@ -29,8 +33,12 @@ class BasicTests(OVC_BaseTest):
 
         self.cs2 = self.random_string()
         self.vdcuser = self.random_string()
-        self.vdcusers.extend([{self.vdcuser: {'provider': 'itsyouonline', 'email': 'abdelmab@greenitglobe.com'}}])
-        self.cloudspaces.extend([{self.cs2: {'users': OrderedDict([('name', self.vdcuser), ('accesstype', 'CXDRAU')])}}])
+        self.vdcusers.extend([{self.vdcuser: {'openvcloud': self.openvcloud,
+                                              'provider': 'itsyouonline',
+                                              'email': 'abdelmab@greenitglobe.com'}}])
+        self.cloudspaces.extend([{self.cs2: {'account': self.acc1,
+                                             'users': OrderedDict([('name', self.vdcuser),
+                                                                   ('accesstype', 'CXDRAU')])}}])
         self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
 
         self.log('Create 1 account and 2 cloudspaces, should succeed')
