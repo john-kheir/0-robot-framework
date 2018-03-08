@@ -2,3 +2,4 @@
       address: '{{config_params('environment')}}'
       login: '{{config_params('login')}}'
       token: '{{token}}'
+      location: '{{config_params('location')}}'

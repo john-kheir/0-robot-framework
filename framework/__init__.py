@@ -18,7 +18,7 @@ logger.setLevel(logging.INFO)
 app_id = config['main']['app_id']
 secret = config['main']['secret']
 data = {
-    "baseurl": "https://itsyouonline/api",
+    "baseurl": "https://itsyou.online/api",
     "application_id_": app_id,
     "secret_": secret
 }

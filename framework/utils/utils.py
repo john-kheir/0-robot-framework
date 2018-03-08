@@ -10,7 +10,6 @@ from js9 import j
 class OVC_BaseTest(constructor):
 
     env = config['main']['environment']
-    key = config['main']['key']
 
     def __init__(self, *args, **kwargs):
         super(OVC_BaseTest, self).__init__(*args, **kwargs)
@@ -20,18 +19,14 @@ class OVC_BaseTest(constructor):
         super(OVC_BaseTest, self).setUp()
 
     def iyo_jwt(self):
-        key_path = os.path.expanduser(OVC_BaseTest.key)
-        ito_client = j.clients.itsyouonline.get(instance="main", sshkey_path=key_path)
+        ito_client = j.clients.itsyouonline.get(instance="main")
         return ito_client.jwt
 
     def ovc_client(self):
-        key_path = os.path.expanduser(OVC_BaseTest.key)
         data = {'address': OVC_BaseTest.env,
-                'port': 443,
-                'appkey_': self.iyo_jwt()
+                'port': 443
                 }
-        return j.clients.openvcloud.get(instance='main', data=data,
-                                        sshkey_path=key_path)
+        return j.clients.openvcloud.get(instance='main', data=data)
 
     def handle_blueprint(self, yaml, *args, **kwargs):
         kwargs['token'] = self.iyo_jwt()
