@@ -50,8 +50,10 @@ class constructor(unittest.TestCase):
             self.fail("error during execution of the blueprint: %s" % msg)
 
     def delete_services(self):
-        for serviceguid in self.api.services.guids.keys():
-            os.system('zrobot service delete %s' % serviceguid)
+        for r in self.api.robots.keys():
+            robot = self.api.robots[r]
+            for serviceguid in robot.services.guids.keys():
+                os.system('zrobot service delete %s' % serviceguid)
 
     def create_blueprint(self, yaml, **kwargs):
         """
@@ -64,11 +66,13 @@ class constructor(unittest.TestCase):
 
     def wait_for_service_action_status(self, servicename, action='install',
                                        status='ok', timeout=200):
-        service = self.api.services.names[servicename]
-        for i in range(timeout):
-            time.sleep(1)
-            state = service.state.categories
-            if state:
-                self.assertEqual(service.state.categories['actions'][action], status)
+        for r in self.api.robots.keys():
+            robot = self.api.robots[r]
+            service = robot.services.names[servicename]
+            for i in range(timeout):
+                time.sleep(1)
+                state = service.state.categories
+                if state:
+                    self.assertEqual(service.state.categories['actions'][action], status)
         #self.assertTrue(state, "No state has been found")
         #self.assertTrue(False, state)
