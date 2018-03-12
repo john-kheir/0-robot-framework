@@ -5,7 +5,6 @@ from collections import OrderedDict
 
 
 class BasicTests(OVC_BaseTest):
-    # we can put this on __init__.py
     def __init__(self, *args, **kwargs):
         super(BasicTests, self).__init__(*args, **kwargs)
 
@@ -55,7 +54,6 @@ class BasicTests(OVC_BaseTest):
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):
-        self.delete_services()
         self.temp_actions = {'account': ['uninstall']}
         self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                             accounts=self.accounts, temp_actions=self.temp_actions)
