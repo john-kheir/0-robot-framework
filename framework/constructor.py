@@ -48,8 +48,8 @@ class constructor(unittest.TestCase):
             return True
         except HTTPError as err:
             msg = err.response.json()['message']
-            self.lg('message: %s' % msg)
-            self.lg('code: %s' % err.response.json()['code'])
+            self.log('message: %s' % msg)
+            self.log('code: %s' % err.response.json()['code'])
             return msg
 
     def delete_services(self):

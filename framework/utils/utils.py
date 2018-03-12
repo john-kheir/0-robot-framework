@@ -17,9 +17,10 @@ class OVC_BaseTest(constructor):
 
     def setUp(self):
         super(OVC_BaseTest, self).setUp()
-        self.vdcusers = [{'kheirj': {'openvcloud': self.openvcloud,
+        self.openvcloud = self.random_string()
+        self.vdcusers = [{'gig_qa_1': {'openvcloud': self.openvcloud,
                                      'provider': 'itsyouonline',
-                                     'email': 'kheirj@greenitglobe.com'}}]
+                                     'email': 'dina.magdy.mohammed+123@gmail.com'}}]
 
     def iyo_jwt(self):
         ito_client = j.clients.itsyouonline.get(instance="main")
