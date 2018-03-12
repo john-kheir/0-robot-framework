@@ -51,6 +51,8 @@ class BasicTests(OVC_BaseTest):
         self.assertTrue(self.get_cloudspace(self.cs1))
         self.assertTrue(self.get_cloudspace(self.cs2))
 
+        #check on the cloudspaces params
+
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):

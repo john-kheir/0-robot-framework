@@ -17,6 +17,10 @@ class OVC_BaseTest(constructor):
 
     def setUp(self):
         super(OVC_BaseTest, self).setUp()
+        self.openvcloud = self.random_string()
+        self.vdcusers = [{'gig_qa_1': {'openvcloud': self.openvcloud,
+                                     'provider': 'itsyouonline',
+                                     'email': 'dina.magdy.mohammed+123@gmail.com'}}]
 
     def iyo_jwt(self):
         ito_client = j.clients.itsyouonline.get(instance="main")
@@ -31,16 +35,16 @@ class OVC_BaseTest(constructor):
     def handle_blueprint(self, yaml, *args, **kwargs):
         kwargs['token'] = self.iyo_jwt()
         blueprint = self.create_blueprint(yaml, **kwargs)
-        self.execute_blueprint(blueprint)
+        return self.execute_blueprint(blueprint)
 
     def create_account(self, *args, **kwargs):
-        self.handle_blueprint('account.yaml', *args, **kwargs)
+        return self.handle_blueprint('account.yaml', *args, **kwargs)
 
     def create_cs(self, *args, **kwargs):
-        self.handle_blueprint('vdc.yaml', *args, **kwargs)
+        return self.handle_blueprint('vdc.yaml', *args, **kwargs)
 
     def create_vm(self, *args, **kwargs):
-        self.handle_blueprint('vm.yaml', *args, **kwargs)
+        return self.handle_blueprint('vm.yaml', *args, **kwargs)
 
     def get_cloudspace(self, name):
         cloudspaces = self.ovc_client.api.cloudapi.cloudspaces.list()

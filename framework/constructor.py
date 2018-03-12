@@ -45,9 +45,12 @@ class constructor(unittest.TestCase):
 
         try:
             tasks, _ = client.api.blueprints.ExecuteBlueprint(data)
+            return True
         except HTTPError as err:
             msg = err.response.json()['message']
-            self.fail("error during execution of the blueprint: %s" % msg)
+            self.log('message: %s' % msg)
+            self.log('code: %s' % err.response.json()['code'])
+            return msg
 
     def delete_services(self):
         for r in self.api.robots.keys():
