@@ -31,16 +31,16 @@ class OVC_BaseTest(constructor):
     def handle_blueprint(self, yaml, *args, **kwargs):
         kwargs['token'] = self.iyo_jwt()
         blueprint = self.create_blueprint(yaml, **kwargs)
-        self.execute_blueprint(blueprint)
+        return self.execute_blueprint(blueprint)
 
     def create_account(self, *args, **kwargs):
-        self.handle_blueprint('account.yaml', *args, **kwargs)
+        return self.handle_blueprint('account.yaml', *args, **kwargs)
 
     def create_cs(self, *args, **kwargs):
-        self.handle_blueprint('vdc.yaml', *args, **kwargs)
+        return self.handle_blueprint('vdc.yaml', *args, **kwargs)
 
     def create_vm(self, *args, **kwargs):
-        self.handle_blueprint('vm.yaml', *args, **kwargs)
+        return self.handle_blueprint('vm.yaml', *args, **kwargs)
 
     def get_cloudspace(self, name):
         cloudspaces = self.ovc_client.api.cloudapi.cloudspaces.list()
