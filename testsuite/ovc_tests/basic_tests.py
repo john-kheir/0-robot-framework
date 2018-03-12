@@ -51,10 +51,56 @@ class BasicTests(OVC_BaseTest):
         self.assertTrue(self.get_cloudspace(self.cs1))
         self.assertTrue(self.get_cloudspace(self.cs2))
 
+        #check on the cloudspaces params
+
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):
         self.temp_actions = {'account': ['uninstall']}
         self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                             accounts=self.accounts, temp_actions=self.temp_actions)
+        self.delete_services()
+
+
+
+
+
+class accounts(OVC_BaseTest):
+    def __init__(self, *args, **kwargs):
+        super(BasicTests, self).__init__(*args, **kwargs)
+
+    def setUp(self):
+        super(BasicTests, self).setUp()
+        self.openvcloud = self.random_string()
+        self.acc1 = self.random_string()
+        self.accounts = [{self.acc1: {'openvcloud': self.openvcloud}}]
+
+    def test002_trial(self):
+        """ ZRT-OVC-001
+        *Test case for ...*
+
+        **Test Scenario:**
+
+        #. Create an account and 2 cloudspaces, should succeed.
+        #. check that the cloudspaces have been created.
+        """
+        self.log('%s STARTED' % self._testID)
+
+        self.vdcuser = self.random_string()
+        self.accounts = [{self.acc1:}]
+        self.temp_actions = {'account': ['install'], 'vdcuser': ['install']}
+
+        self.log('Create 1 account')
+        res = self.create_cs(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
+                             accounts=self.accounts, temp_actions=self.temp_actions)
+
+        import ipdb;ipdb.set_trace()
+        self.assertEqual(res, '')
+
+        self.log('%s ENDED' % self._testID)
+
+    def tearDown(self):
+        #self.temp_actions = {'account': ['uninstall']}
+        #self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
+        #                    accounts=self.accounts, temp_actions=self.temp_actions)
         self.delete_services()
