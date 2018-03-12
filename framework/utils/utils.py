@@ -19,8 +19,8 @@ class OVC_BaseTest(constructor):
         super(OVC_BaseTest, self).setUp()
         self.openvcloud = self.random_string()
         self.vdcusers = [{'gig_qa_1': {'openvcloud': self.openvcloud,
-                                     'provider': 'itsyouonline',
-                                     'email': 'dina.magdy.mohammed+123@gmail.com'}}]
+                                       'provider': 'itsyouonline',
+                                       'email': 'dina.magdy.mohammed+123@gmail.com'}}]
 
     def iyo_jwt(self):
         ito_client = j.clients.itsyouonline.get(instance="main")
@@ -51,4 +51,11 @@ class OVC_BaseTest(constructor):
         for cs in cloudspaces:
             if cs['name'] == name:
                 return cs
+        return False
+
+    def get_account(self, name):
+        accounts = self.ovc_client.api.cloudapi.accounts.list()
+        for account in accounts:
+            if account['name'] == name:
+                return self.ovc_client.api.cloudapi.accounts.get(accountId=account['id'])
         return False
