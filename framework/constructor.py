@@ -58,6 +58,13 @@ class constructor(unittest.TestCase):
             for serviceguid in robot.services.guids.keys():
                 os.system('zrobot service delete %s' % serviceguid)
 
+    def check_if_service_exist(self, servicename):
+        for r in self.api.robots.keys():
+            robot = self.api.robots[r]
+            if servicename in robot.services.names.keys():
+                return True
+            return False
+
     def create_blueprint(self, yaml, **kwargs):
         """
         yaml file that is used for blueprint creation

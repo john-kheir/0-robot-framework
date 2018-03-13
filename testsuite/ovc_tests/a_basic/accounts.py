@@ -2,6 +2,7 @@ import time
 from zerorobot.dsl.ZeroRobotAPI import ZeroRobotAPI
 from framework.utils.utils import OVC_BaseTest
 from collections import OrderedDict
+from random import randint
 
 
 class accounts(OVC_BaseTest):
@@ -48,10 +49,10 @@ class accounts(OVC_BaseTest):
         """
         self.log('%s STARTED' % self._testID)
 
-        CU_D = 2
-        CU_C = 2
-        CU_I = 2
-        CU_M = 2
+        CU_D = randint(1, 10)
+        CU_C = randint(1, 10)
+        CU_I = randint(1, 10)
+        CU_M = randint(1, 10)
         self.accounts = [{self.acc1: {'openvcloud': self.openvcloud, 'maxMemoryCapacity': CU_M,
                                       'maxCPUCapacity': CU_C, 'maxDiskCapacity': CU_D, 'maxNumPublicIP', CU_I,
                                       'users': 2}}]
@@ -63,19 +64,31 @@ class accounts(OVC_BaseTest):
 
         self.log('Check if the account parameters are reflected correctly on OVC')
         account = self.get_account(self.acc1)
-        self.assertTrue(account)
+        self.assertEqual(account['status'], 'CONFIRMED')
         self.assertEqual(account['resourceLimits']['CU_D'], CU_D)
         self.assertEqual(account['resourceLimits']['CU_C'], CU_C)
         self.assertEqual(account['resourceLimits']['CU_I'], CU_I)
         self.assertEqual(account['resourceLimits']['CU_M'], CU_M)
 
         self.log('Update some parameters and make sure it is updated')
+        self.accounts = [{self.acc1: {'openvcloud': self.openvcloud, 'maxMemoryCapacity': CU_M - 1,
+                                      'maxCPUCapacity': CU_C - 1, 'maxDiskCapacity': CU_D - 1, 'maxNumPublicIP', CU_I - 1,
+                                      'users': 2}}]
+        res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
+                                  accounts=self.accounts, temp_actions=self.temp_actions)
+        self.assertTrue(res, True)
+        account = self.get_account(self.acc1)
+        self.assertEqual(account['resourceLimits']['CU_D'], CU_D - 1)
+        self.assertEqual(account['resourceLimits']['CU_C'], CU_C - 1)
+        self.assertEqual(account['resourceLimits']['CU_I'], CU_I - 1)
+        self.assertEqual(account['resourceLimits']['CU_M'], CU_M - 1)
 
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):
-        #check if there is a service of kind account
-        #self.temp_actions = {'account': ['uninstall']}
-        #self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
-        #                    accounts=self.accounts, temp_actions=self.temp_actions)
+        # check if there is a service of kind account
+        if check_if_service_exist(self.acc1):
+            self.temp_actions = {'account': ['uninstall']}
+            self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
+                                accounts=self.accounts, temp_actions=self.temp_actions)
         self.delete_services()
