@@ -47,6 +47,7 @@ class OVC_BaseTest(constructor):
         return self.handle_blueprint('vm.yaml', *args, **kwargs)
 
     def get_cloudspace(self, name):
+        time.sleep(2)
         cloudspaces = self.ovc_client.api.cloudapi.cloudspaces.list()
         for cs in cloudspaces:
             if cs['name'] == name:
@@ -54,6 +55,7 @@ class OVC_BaseTest(constructor):
         return False
 
     def get_account(self, name):
+        time.sleep(2)
         accounts = self.ovc_client.api.cloudapi.accounts.list()
         for account in accounts:
             if account['name'] == name:
