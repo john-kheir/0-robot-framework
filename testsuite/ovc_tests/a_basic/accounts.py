@@ -61,7 +61,7 @@ class accounts(OVC_BaseTest):
         res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                   accounts=self.accounts, temp_actions=self.temp_actions)
         self.assertTrue(type(res), type(dict()))
-        self.wait_for_service_action_status(self.acc1)
+        self.wait_for_service_action_status(self.acc1, res[self.acc1])
 
         self.log('Check if the account parameters are reflected correctly on OVC')
         account = self.get_account(self.acc1)
@@ -78,6 +78,7 @@ class accounts(OVC_BaseTest):
         res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                   accounts=self.accounts, temp_actions=self.temp_actions)
         self.assertTrue(type(res), type(dict()))
+        self.wait_for_service_action_status(self.acc1, res[self.acc1])
         account = self.get_account(self.acc1)
         self.assertEqual(account['resourceLimits']['CU_D'], CU_D - 1)
         self.assertEqual(account['resourceLimits']['CU_C'], CU_C - 1)
