@@ -57,7 +57,7 @@ class BasicTests(OVC_BaseTest):
         self.log('%s ENDED' % self._testID)
 
     def tearDown(self):
-        self.temp_actions = {'account': ['uninstall']}
+        self.temp_actions = {'account': {'actions: '['uninstall']}}
         self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                             accounts=self.accounts, temp_actions=self.temp_actions)
         self.delete_services()
