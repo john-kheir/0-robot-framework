@@ -13,7 +13,8 @@ class accounts(OVC_BaseTest):
         super(accounts, self).setUp()
         self.acc1 = self.random_string()
         self.accounts = [{self.acc1: {'openvcloud': self.openvcloud}}]
-        self.temp_actions = {'account': ['install'], 'vdcuser': ['install']}
+        self.temp_actions = {'account': {'actions': ['install']},
+                             'vdcuser': {'actions': ['install']}}
 
     def test001_create_account_with_wrong_params(self):
         """ ZRT-OVC-001

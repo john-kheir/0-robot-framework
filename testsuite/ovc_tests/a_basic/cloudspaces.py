@@ -38,7 +38,8 @@ class BasicTests(OVC_BaseTest):
         self.cloudspaces.extend([{self.cs2: {'account': self.acc1,
                                              'users': OrderedDict([('name', self.vdcuser),
                                                                    ('accesstype', 'CXDRAU')])}}])
-        self.temp_actions = {'account': ['install'], 'vdcuser': ['install'], 'vdc': ['install']}
+        self.temp_actions = {'account': {'actions': ['install']},
+                             'vdcuser': {'actions': ['install']}, 'vdc': ['install']}
 
         self.log('Create 1 account and 2 cloudspaces, should succeed')
         self.create_cs(openvcloud=self.openvcloud, vdcusers=self.vdcusers, accounts=self.accounts,
