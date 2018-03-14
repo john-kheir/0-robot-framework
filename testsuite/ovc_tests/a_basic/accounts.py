@@ -37,7 +37,7 @@ class accounts(OVC_BaseTest):
 
         self.log('%s ENDED' % self._testID)
 
-    def test002_create_account_with correct_params(self):
+    def test002_create_account_with_correct_params(self):
         """ ZRT-OVC-002
         *Test case for creating account with correct parameters*
 
@@ -49,18 +49,19 @@ class accounts(OVC_BaseTest):
         """
         self.log('%s STARTED' % self._testID)
 
-        CU_D = randint(1, 10)
-        CU_C = randint(1, 10)
-        CU_I = randint(1, 10)
-        CU_M = randint(1, 10)
+        CU_D = randint(15, 30)
+        CU_C = randint(15, 30)
+        CU_I = randint(15, 30)
+        CU_M = randint(15, 30)
         self.accounts = [{self.acc1: {'openvcloud': self.openvcloud, 'maxMemoryCapacity': CU_M,
-                                      'maxCPUCapacity': CU_C, 'maxDiskCapacity': CU_D, 'maxNumPublicIP', CU_I,
-                                      'users': 2}}]
+                                      'maxCPUCapacity': CU_C, 'maxDiskCapacity': CU_D,
+                                      'maxNumPublicIP': CU_I}}]
 
         self.log('Create an account, should succeed')
         res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                   accounts=self.accounts, temp_actions=self.temp_actions)
-        self.assertTrue(res, True)
+        self.assertTrue(type(res), type(dict()))
+        self.wait_for_service_action_status(self.acc1)
 
         self.log('Check if the account parameters are reflected correctly on OVC')
         account = self.get_account(self.acc1)
@@ -72,11 +73,11 @@ class accounts(OVC_BaseTest):
 
         self.log('Update some parameters and make sure it is updated')
         self.accounts = [{self.acc1: {'openvcloud': self.openvcloud, 'maxMemoryCapacity': CU_M - 1,
-                                      'maxCPUCapacity': CU_C - 1, 'maxDiskCapacity': CU_D - 1, 'maxNumPublicIP', CU_I - 1,
+                                      'maxCPUCapacity': CU_C - 1, 'maxDiskCapacity': CU_D - 1, 'maxNumPublicIP': CU_I - 1,
                                       'users': 2}}]
         res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                   accounts=self.accounts, temp_actions=self.temp_actions)
-        self.assertTrue(res, True)
+        self.assertTrue(type(res), type(dict()))
         account = self.get_account(self.acc1)
         self.assertEqual(account['resourceLimits']['CU_D'], CU_D - 1)
         self.assertEqual(account['resourceLimits']['CU_C'], CU_C - 1)
@@ -87,7 +88,7 @@ class accounts(OVC_BaseTest):
 
     def tearDown(self):
         # check if there is a service of kind account
-        if check_if_service_exist(self.acc1):
+        if self.check_if_service_exist(self.acc1):
             self.temp_actions = {'account': ['uninstall']}
             self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                 accounts=self.accounts, temp_actions=self.temp_actions)

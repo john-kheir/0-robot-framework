@@ -45,12 +45,25 @@ class constructor(unittest.TestCase):
 
         try:
             tasks, _ = client.api.blueprints.ExecuteBlueprint(data)
-            return True
+            result = dict()
+            for task in tasks:
+                result[task.service_name] = task.guid
+            return result
         except HTTPError as err:
             msg = err.response.json()['message']
             self.log('message: %s' % msg)
             self.log('code: %s' % err.response.json()['code'])
             return msg
+
+    def wait_for_service_action_status(self, servicename, task_guid, timeout=100):
+        for r in self.api.robots.keys():
+            robot = self.api.robots[r]
+            service = robot.services.names[servicename]
+            task = service.task_list.get_task_by_guid(task_guid)
+            for i in range(timeout):
+                time.sleep(1)
+                if task.state != 'new':
+                    break
 
     def delete_services(self):
         for r in self.api.robots.keys():
@@ -74,7 +87,7 @@ class constructor(unittest.TestCase):
                                                                  **kwargs)
         return blueprint
 
-    def wait_for_service_action_status(self, servicename, action='install',
+    def wait_for_service_action_status_old(self, servicename, action='install',
                                        status='ok', timeout=200):
         for r in self.api.robots.keys():
             robot = self.api.robots[r]
