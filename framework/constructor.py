@@ -71,8 +71,8 @@ class constructor(unittest.TestCase):
     def delete_services(self):
         for r in self.api.robots.keys():
             robot = self.api.robots[r]
-            for serviceguid in robot.services.guids.keys():
-                os.system('zrobot service delete %s' % serviceguid)
+            for service in robot.services.names.values():
+                service.delete()
 
     def check_if_service_exist(self, servicename):
         for r in self.api.robots.keys():
