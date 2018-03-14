@@ -73,8 +73,8 @@ class accounts(OVC_BaseTest):
 
         self.log('Update some parameters and make sure it is updated')
         self.accounts = [{self.acc1: {'openvcloud': self.openvcloud, 'maxMemoryCapacity': CU_M - 1,
-                                      'maxCPUCapacity': CU_C - 1, 'maxDiskCapacity': CU_D - 1, 'maxNumPublicIP': CU_I - 1,
-                                      'users': 2}}]
+                                      'maxCPUCapacity': CU_C - 1, 'maxDiskCapacity': CU_D - 1,
+                                      'maxNumPublicIP': CU_I - 1}}]
         res = self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                   accounts=self.accounts, temp_actions=self.temp_actions)
         self.assertTrue(type(res), type(dict()))

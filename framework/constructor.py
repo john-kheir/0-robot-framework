@@ -55,15 +55,18 @@ class constructor(unittest.TestCase):
             self.log('code: %s' % err.response.json()['code'])
             return msg
 
-    def wait_for_service_action_status(self, servicename, task_guid, timeout=100):
+    def wait_for_service_action_status(self, servicename, task_guid,
+                                       action='install', timeout=100):
         for r in self.api.robots.keys():
             robot = self.api.robots[r]
             service = robot.services.names[servicename]
             task = service.task_list.get_task_by_guid(task_guid)
-            for i in range(timeout):
-                time.sleep(1)
-                if task.state != 'new':
-                    break
+            if task.action_name == action:
+                for i in range(timeout):
+                    time.sleep(1)
+                    if task.state != 'new':
+                        break
+                break
 
     def delete_services(self):
         for r in self.api.robots.keys():
@@ -86,16 +89,3 @@ class constructor(unittest.TestCase):
                                                                  actions='actions.yaml',
                                                                  **kwargs)
         return blueprint
-
-    def wait_for_service_action_status_old(self, servicename, action='install',
-                                       status='ok', timeout=200):
-        for r in self.api.robots.keys():
-            robot = self.api.robots[r]
-            service = robot.services.names[servicename]
-            for i in range(timeout):
-                time.sleep(1)
-                state = service.state.categories
-                if state:
-                    self.assertEqual(service.state.categories['actions'][action], status)
-        #self.assertTrue(state, "No state has been found")
-        #self.assertTrue(False, state)
