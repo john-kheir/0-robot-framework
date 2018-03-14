@@ -36,13 +36,22 @@ class constructor(unittest.TestCase):
     def log(self, msg):
         self._logger.info(msg)
 
+    def create_blueprint(self, yaml, **kwargs):
+        """
+        yaml file that is used for blueprint creation
+        """
+        blueprint = self.j2_env.get_template('base.yaml').render(services=yaml,
+                                                                 actions='actions.yaml',
+                                                                 **kwargs)
+        return blueprint
+
     def execute_blueprint(self, blueprint):
-        os.system('echo "{0}" >> /tmp/{1}_{2}.yaml'.format(blueprint, self._testID, self.random_string()))
+        os.system('echo "{0}" >> /tmp/{1}_{2}.yaml'.format(blueprint, self._testID,
+                                                           self.random_string()))
         instance, _ = utils.get_instance()
         client = j.clients.zrobot.get(instance)
         content = j.data.serializer.yaml.loads(blueprint)
         data = {'content': content}
-
         try:
             tasks, _ = client.api.blueprints.ExecuteBlueprint(data)
             result = dict()
@@ -54,6 +63,12 @@ class constructor(unittest.TestCase):
             self.log('message: %s' % msg)
             self.log('code: %s' % err.response.json()['code'])
             return msg
+
+    def delete_services(self):
+        for r in self.api.robots.keys():
+            robot = self.api.robots[r]
+            for service in robot.services.names.values():
+                service.delete()
 
     def wait_for_service_action_status(self, servicename, task_guid,
                                        action='install', timeout=100):
@@ -68,24 +83,9 @@ class constructor(unittest.TestCase):
                         break
                 break
 
-    def delete_services(self):
-        for r in self.api.robots.keys():
-            robot = self.api.robots[r]
-            for service in robot.services.names.values():
-                service.delete()
-
     def check_if_service_exist(self, servicename):
         for r in self.api.robots.keys():
             robot = self.api.robots[r]
             if servicename in robot.services.names.keys():
                 return True
             return False
-
-    def create_blueprint(self, yaml, **kwargs):
-        """
-        yaml file that is used for blueprint creation
-        """
-        blueprint = self.j2_env.get_template('base.yaml').render(services=yaml,
-                                                                 actions='actions.yaml',
-                                                                 **kwargs)
-        return blueprint
