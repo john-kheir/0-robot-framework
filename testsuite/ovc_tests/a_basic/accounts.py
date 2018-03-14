@@ -91,7 +91,7 @@ class accounts(OVC_BaseTest):
     def tearDown(self):
         # check if there is a service of kind account
         if self.check_if_service_exist(self.acc1):
-            self.temp_actions = {'account': {'actions: '['uninstall']}}
+            self.temp_actions = {'account': {'actions': ['uninstall']}}
             self.create_account(openvcloud=self.openvcloud, vdcusers=self.vdcusers,
                                 accounts=self.accounts, temp_actions=self.temp_actions)
         self.delete_services()
